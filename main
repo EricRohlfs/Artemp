@@ -14,7 +14,7 @@ unsigned long time;
 
 void setup(void) {
   Serial.begin(9600);
-  Serial.print("milliseconds,temp,correlationid, sensorid");
+  Serial.println("milliseconds,temp,correlationid, sensorid");
 }
 
  
