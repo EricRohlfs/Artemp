@@ -69,7 +69,9 @@ void loop(void) {
   present = ds.reset();
   ds.select(addr);    
   ds.write(0xBE);         // Read Scratchpad
-
+  //Serial.write(',');
+  Serial.print(micros());
+  Serial.write(',');
   //Serial.print("  Data = ");
   //Serial.print(present, HEX);
  // Serial.print(" ");
