@@ -9,6 +9,8 @@
 
 OneWire  ds(10);  // on pin 10 (a 4.7K resistor is necessary)
 
+unsigned long correlation = 0;
+
 void setup(void) {
   Serial.begin(9600);
 }
@@ -26,21 +28,17 @@ void loop(void) {
     //Serial.println();
     ds.reset_search();
     delay(30000); //wait between scans 
+    correlation++;
     return;
   }
   
-  //Serial.print("ROM =");
-  Serial.print(" , ");
-  for( i = 0; i < 8; i++) {
-    Serial.write(' ');
-    Serial.print(addr[i], HEX);
-  }
+ 
 
   if (OneWire::crc8(addr, 7) != addr[7]) {
       Serial.println("CRC is not valid!");
       return;
   }
-  Serial.println();
+  //Serial.println();
  
   // the first ROM byte indicates which chip
   switch (addr[0]) {
@@ -110,5 +108,15 @@ void loop(void) {
   //Serial.print(" Celsius, ");
   //Serial.print(", ");
   Serial.print(fahrenheit);
+  Serial.print(",");
   //Serial.println(" Fahrenheit");
+  Serial.print(correlation);
+  Serial.print(",");
+   
+  //Serial.print("ROM =");
+   for( i = 0; i < 8; i++) {  
+    Serial.write(' ');
+    Serial.print(addr[i], HEX);
+  }
+  Serial.println();
 }
