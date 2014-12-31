@@ -10,10 +10,14 @@
 OneWire  ds(10);  // on pin 10 (a 4.7K resistor is necessary)
 
 unsigned long correlation = 0;
+unsigned long time;
 
 void setup(void) {
   Serial.begin(9600);
+  Serial.print("milliseconds,temp,correlationid, sensorid");
 }
+
+ 
 
 void loop(void) {
   byte i;
@@ -69,9 +73,8 @@ void loop(void) {
   present = ds.reset();
   ds.select(addr);    
   ds.write(0xBE);         // Read Scratchpad
-  //Serial.write(',');
-  Serial.print(micros());
-  Serial.write(',');
+  time = micros();
+  
   //Serial.print("  Data = ");
   //Serial.print(present, HEX);
  // Serial.print(" ");
@@ -110,11 +113,12 @@ void loop(void) {
   //Serial.print(" Celsius, ");
   //Serial.print(", ");
   Serial.print(fahrenheit);
-  Serial.print(",");
+  Serial.write(',');
   //Serial.println(" Fahrenheit");
   Serial.print(correlation);
-  Serial.print(",");
-   
+  Serial.write(',');
+  Serial.print(time);
+  Serial.write(','); 
   //Serial.print("ROM =");
    for( i = 0; i < 8; i++) {  
     Serial.write(' ');
